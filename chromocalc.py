@@ -1,5 +1,6 @@
 import math
 import random
+import statistics
 
 GENE_STATS_LIST = [
     [1, 10, 50, 100, 300],  # 0: Health
@@ -76,6 +77,7 @@ def findMaxLoci():
         else:
             genelevelindex = 0
             savestat = stat
+            print(f"Index: {statindex} is {stat} stat")
             while savestat != 0:
                 lociamount += savestat//GENE_STATS_LIST[statindex][genelevelindex]
                 lastlociamount = savestat//GENE_STATS_LIST[statindex][genelevelindex]
@@ -213,9 +215,9 @@ while True:
             print("Invalid input. Please enter one of the provided choices.")
             continue
 
-    calcChoice = input("Enter choice(MinL/MaxL/MinC/MaxC/SimNormal/GeneralChromoSize/add/end): ")
+    calcChoice = input("Enter choice(MinL/MaxL/MinC/MaxC/SimNormal/SimAdvanced/GeneralChromoSize/add/end): ")
 
-    if calcChoice in ('MinL', 'MaxL', 'MinC', 'MaxC', 'SimNormal', 'GeneralChromoSize', 'add', 'end'):
+    if calcChoice in ('MinL', 'MaxL', 'MinC', 'MaxC', 'SimNormal', 'SimAdvanced', 'GeneralChromoSize', 'add', 'end'):
         try:
             if calcChoice == 'MinL':
                 print(f"Minimum Loci for current genome is {findMinLoci()}")
@@ -232,9 +234,26 @@ while True:
             if calcChoice == 'SimNormal':
                 averageFromSims = int(input("Enter choice(times to sim [average]): "))
                 averageLoci = 0
+                tempnormalloci = 0
+                sdlist = []
                 for i in range(averageFromSims):
-                    averageLoci += findNormalLoci()
-                print(f"Simulated Average Loci for current genome was {averageLoci/averageFromSims} in this instance")
+                    tempnormalloci = findNormalLoci()
+                    averageLoci += tempnormalloci
+                    sdlist.append(tempnormalloci)
+                sdlist_sd = statistics.stdev(sdlist)
+                print(f"Simulated Average Loci for current genome was {averageLoci/averageFromSims} in this instance\nStandard Deviation was {sdlist_sd}")
+            if calcChoice == 'SimAdvanced':
+                averageFromSims = int(input("Enter choice(times to sim [average]): "))
+                zscoreTarget = int(input("Enter target for z-score: "))
+                averageLoci = 0
+                tempnormalloci = 0
+                sdlist = []
+                for i in range(averageFromSims):
+                    tempnormalloci = findNormalLoci()
+                    averageLoci += tempnormalloci
+                    sdlist.append(tempnormalloci)
+                sdlist_sd = statistics.stdev(sdlist)
+                print(f"Simulated Average Loci for current genome was {averageLoci/averageFromSims} in this instance\nStandard Deviation was {sdlist_sd}\nZ-Score is {(zscoreTarget-(averageLoci/averageFromSims))/sdlist_sd}")
             if calcChoice == 'GeneralChromoSize':
                 averageFromGen = int(input("Enter choice(times to sim [average]): "))
                 averageChromo = 0
@@ -255,4 +274,3 @@ while True:
                 break
     else:
         print("Invalid Input")
-
