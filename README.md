@@ -1,5 +1,5 @@
 # WBChromoCalc
-Program used for claculating min/maxes of genetic qualities of Worldbox
+Program used for claculating min/maxes of genetic qualities in Worldbox
 
 Features:
 - :small_blue_diamond: Minimum/Maximum Loci
