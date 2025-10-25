@@ -94,7 +94,7 @@ def findNormalLoci():
         if stat == 0:
             statindex += 1
         else:
-            if random.random() < 0.01 or priority == 1:
+            if random.random() < 0.8 or priority == 1:
                 priority = 1
                 savestat = stat
                 genelevelindex = -1
@@ -255,3 +255,4 @@ while True:
                 break
     else:
         print("Invalid Input")
+
