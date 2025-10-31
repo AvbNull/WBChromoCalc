@@ -257,9 +257,14 @@ while True:
             if calcChoice == 'GeneralChromoSize':
                 averageFromGen = int(input("Enter choice(times to sim [average]): "))
                 averageChromo = 0
+                tempChromo = 0
+                sdlist = []
                 for i in range(averageFromGen):
-                    averageChromo += generateChromosome()
-                print(f"Simulated Chromosome Loci Space was {averageChromo/averageFromGen} in this instance [unrelated to inputted genome]")
+                    tempChromo = generateChromosome()
+                    averageChromo += tempChromo
+                    sdlist.append(tempChromo)
+                sdlist_sd = statistics.stdev(sdlist)  
+                print(f"Simulated Chromosome Loci Space was {averageChromo/averageFromGen} in this instance [both unrelated to inputted genome]\nStandard Deviation was {sdlist_sd}")
             if calcChoice == 'add':
                 skipcalc = 1
             if calcChoice == 'end':
@@ -274,3 +279,4 @@ while True:
                 break
     else:
         print("Invalid Input")
+
